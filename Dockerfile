@@ -26,6 +26,10 @@ RUN if [ -d "/go/bin/linux_${TARGETARCH}" ]; then mv /go/bin/linux_${TARGETARCH}
 FROM ghcr.io/strangelove-ventures/infra-toolkit:v0.0.6 AS busybox-min
 RUN addgroup --gid 1000 -S relayer && adduser --uid 100 -S relayer -G relayer
 
+# Create directory structure in busybox-min
+RUN mkdir -p /home/relayer/.relayer/config && \
+    chown -R relayer:relayer /home/relayer/.relayer
+
 # Use ln and rm from full featured busybox for assembling final image
 FROM busybox:1.34.1-musl AS busybox-full
 
@@ -36,14 +40,13 @@ LABEL org.opencontainers.image.source="https://github.com/cosmos/relayer"
 
 WORKDIR /bin
 
-# Install ln (for making hard links) and rm (for cleanup) from full busybox image (will be deleted, only needed for image assembly)
+# Install ln (for making hard links) and rm (for cleanup) from full busybox image
 COPY --from=busybox-full /bin/ln /bin/rm ./
 
-# Install minimal busybox image as shell binary (will create hardlinks for the rest of the binaries to this data)
+# Install minimal busybox image as shell binary
 COPY --from=busybox-min /busybox/busybox /bin/sh
 
-# Add hard links for read-only utils, then remove ln and rm
-# Will then only have one copy of the busybox minimal binary file with all utils pointing to the same underlying inode
+# Add hard links for read-only utils
 RUN ln sh pwd && \
     ln sh ls && \
     ln sh cat && \
@@ -68,10 +71,6 @@ COPY --from=busybox-min /etc/ssl/cert.pem /etc/ssl/cert.pem
 # Install relayer user and setup directory structure
 COPY --from=busybox-min /etc/passwd /etc/passwd
 COPY --from=busybox-min --chown=100:1000 /home/relayer /home/relayer
-
-# Create necessary directories with proper permissions
-RUN mkdir -p /home/relayer/.relayer/config && \
-    chown -R 100:1000 /home/relayer/.relayer
 
 # Copy startup script with proper permissions
 COPY --chmod=755 --chown=100:1000 start.sh /home/relayer/start.sh
