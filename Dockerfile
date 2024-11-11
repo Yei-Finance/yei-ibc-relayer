@@ -54,6 +54,9 @@ RUN ln sh pwd && \
     ln sh tar && \
     ln sh tee && \
     ln sh du && \
+    ln sh mkdir && \
+    ln sh echo && \
+    ln sh base64 && \
     rm ln rm
 
 # Install chain binaries
@@ -62,10 +65,15 @@ COPY --from=build-env /bin/rly /bin
 # Install trusted CA certificates
 COPY --from=busybox-min /etc/ssl/cert.pem /etc/ssl/cert.pem
 
-# Install relayer user
+# Install relayer user and setup directory structure
 COPY --from=busybox-min /etc/passwd /etc/passwd
 COPY --from=busybox-min --chown=100:1000 /home/relayer /home/relayer
 
+# Create necessary directories with proper permissions
+RUN mkdir -p /home/relayer/.relayer/config && \
+    chown -R 100:1000 /home/relayer/.relayer
+
+# Copy startup script with proper permissions
 COPY --chmod=755 --chown=100:1000 start.sh /home/relayer/start.sh
 
 WORKDIR /home/relayer
