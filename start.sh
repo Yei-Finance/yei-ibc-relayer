@@ -2,14 +2,12 @@
 set -e
 set -x
 
-# Decode config using printf and tr
-echo "Decoding config..."
-printf "%s" "$RELAYER_CONFIG" | tr ' ' '\n' | grep -v '^$' | while read -r line; do
-    printf "%s" "$line" | tr '_-' '/+' | tr -d '\n'
-done | sed 's/./&\n/66;P;D' > /home/relayer/.relayer/config/config.yaml
+# Write config directly
+echo "$RELAYER_CONFIG" > /home/relayer/.relayer/config/config.yaml
 
-# Verify config file exists
+echo "Config directory contents:"
 ls -la /home/relayer/.relayer/config/
+
 echo "Config file contents:"
 cat /home/relayer/.relayer/config/config.yaml
 
