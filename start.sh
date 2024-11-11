@@ -12,8 +12,8 @@ echo "Config file contents:"
 cat /home/relayer/.relayer/config/config.yaml
 
 # Initialize relayer config
-echo "Initializing relayer config..."
-rly config init
+# echo "Initializing relayer config..."
+# rly config init
 
 # Initialize keys
 echo "Restoring Noble key..."
