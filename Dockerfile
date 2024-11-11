@@ -60,6 +60,10 @@ RUN ln sh pwd && \
     ln sh mkdir && \
     ln sh echo && \
     ln sh base64 && \
+    ln sh sed && \
+    ln sh head && \
+    ln sh tail && \
+    ln sh tr && \
     rm ln rm
 
 # Install chain binaries

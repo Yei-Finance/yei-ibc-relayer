@@ -1,14 +1,16 @@
 #!/bin/sh
+set -e
+set -x
 
-set -e  # Exit on any error
-set -x  # Print commands as they're executed
-
-# Decode config from env var
+# Decode config using printf and tr
 echo "Decoding config..."
-echo $RELAYER_CONFIG | base64 -d > /home/relayer/.relayer/config/config.yaml
+printf "%s" "$RELAYER_CONFIG" | tr ' ' '\n' | grep -v '^$' | while read -r line; do
+    printf "%s" "$line" | tr '_-' '/+' | tr -d '\n'
+done | sed 's/./&\n/66;P;D' > /home/relayer/.relayer/config/config.yaml
 
-# Verify config was written
+# Verify config file exists
 ls -la /home/relayer/.relayer/config/
+echo "Config file contents:"
 cat /home/relayer/.relayer/config/config.yaml
 
 # Initialize relayer config

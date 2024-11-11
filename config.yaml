@@ -10,7 +10,6 @@ chains:
     noble:
         type: cosmos
         value:
-            key-directory: /Users/benjamin/.relayer/keys/noble-1
             key: yei
             chain-id: noble-1
             rpc-addr: https://rpc.lavenderfive.com:443/noble
@@ -35,7 +34,6 @@ chains:
     sei:
         type: cosmos
         value:
-            key-directory: /Users/benjamin/.relayer/keys/pacific-1
             key: yei
             chain-id: pacific-1
             rpc-addr: https://rpc.sei-apis.com:443/?x-apikey=d0227c6f
