@@ -66,11 +66,9 @@ COPY --from=busybox-min /etc/ssl/cert.pem /etc/ssl/cert.pem
 COPY --from=busybox-min /etc/passwd /etc/passwd
 COPY --from=busybox-min --chown=100:1000 /home/relayer /home/relayer
 
+COPY --chmod=755 --chown=100:1000 start.sh /home/relayer/start.sh
+
 WORKDIR /home/relayer
 USER relayer
-
-# Add this before the ENTRYPOINT line
-COPY start.sh /home/relayer/start.sh
-RUN chmod +x /home/relayer/start.sh
 
 ENTRYPOINT ["/home/relayer/start.sh"]
