@@ -17,10 +17,10 @@ cat /home/relayer/.relayer/config/config.yaml
 
 # Initialize keys
 echo "Restoring Noble key..."
-echo "$NOBLE_MNEMONIC" | rly keys restore noble default -
+echo $NOBLE_MNEMONIC | rly keys restore noble default -
 
 echo "Restoring Sei key..."
-echo "$SEI_MNEMONIC" | rly keys restore sei default -
+echo $SEI_MNEMONIC | rly keys restore sei default -
 
 # Start the relayer
 echo "Starting relayer..."
