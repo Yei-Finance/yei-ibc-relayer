@@ -22,6 +22,9 @@ rly keys restore sei yei "$SEI_MNEMONIC"
 rly chains set-rpc-addr noble "https://rpc.lavenderfive.com:443/noble"
 rly chains set-backup-rpc-addrs noble "https://noble-rpc.polkachu.com:443,https://noble-rpc.owallet.io:443"
 
+rly chains set-rpc-addr sei "https://rpc.sei-apis.com:443/?x-apikey=d0227c6f"
+rly chains set-backup-rpc-addrs sei "https://rpc.lavenderfive.com:443/sei,https://sei-rpc.polkachu.com:443"
+
 # Verify RPC connections
 echo "Verifying RPC connections..."
 rly chains list
@@ -30,6 +33,10 @@ rly chains list
 echo "Checking chain balances..."
 rly q balance noble
 rly q balance sei
+
+# Debugging
+echo "Path details:"
+rly paths show noble-sei
 
 # Start the relayer
 echo "Starting relayer..."
