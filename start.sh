@@ -38,6 +38,9 @@ rly q balance sei
 echo "Path details:"
 rly paths show noble-sei
 
+echo "Config:"
+rly config show
+
 # Start the relayer
 echo "Starting relayer..."
 exec rly start noble-sei \
