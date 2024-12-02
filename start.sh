@@ -22,7 +22,7 @@ rly keys restore sei yei "$SEI_MNEMONIC"
 rly chains set-rpc-addr noble "https://rpc.lavenderfive.com:443/noble"
 rly chains set-backup-rpc-addrs noble "https://noble-rpc.polkachu.com,https://noble-rpc.owallet.io"
 
-rly chains set-rpc-addr sei "https://rpc.sei-apis.com/?x-apikey=d0227c6f"
+rly chains set-rpc-addr sei "https://rpc.sei-apis.com:443/?x-apikey=d0227c6f"
 rly chains set-backup-rpc-addrs sei "https://rpc.lavenderfive.com:443/sei,https://sei-rpc.polkachu.com"
 
 # Verify RPC connections
